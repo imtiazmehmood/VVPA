@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:vvplayer/pages/player.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:flutter_storage_path/flutter_storage_path.dart';
-import 'package:appinio_video_player/appinio_video_player.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   const VideoPlayerScreen({super.key});
@@ -16,7 +16,7 @@ class VideoPlayerScreen extends StatefulWidget {
 
 class VideoPlayerScreenState extends State<VideoPlayerScreen> {
   List<Map<String, dynamic>> videos = [];
-  late CustomVideoPlayerController _customVideoPlayerController;
+  late VideoPlayerController videoPlayerController;
 
   @override
   void initState() {

@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/services.dart';
+import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
 
 class PlayerScreen extends StatefulWidget {
   final String parameter;
@@ -13,17 +14,40 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class PlayerScreenState extends State<PlayerScreen> {
-  late CustomVideoPlayerController _customVideoPlayerController;
-  String localPath="assets/videos/mob.mp4";
+  late VideoPlayerController _videoPlayerController;
+  late ChewieController _chewieController;
+
   @override
   void initState() {
     super.initState();
     setPlayerOrientation();
-    playVideo(widget.parameter);
+    _videoPlayerController = VideoPlayerController.file(File(widget.parameter))
+      ..initialize().then((_) {
+        setState(() {});
+      });
+
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      autoPlay: true, // Autoplay the video
+      looping: true, // Loop the video
+      autoInitialize: true, // Auto-initialize the video player
+      // You can customize controls further if needed
+      // For example, to show volume control and seekbar:
+      showControls: true,
+      materialProgressColors: ChewieProgressColors(
+        playedColor: Colors.red,
+        handleColor: Colors.blue,
+        backgroundColor: Colors.grey,
+        bufferedColor: Colors.lightGreen,
+      ),
+    );
+    _chewieController.play();
   }
+
   @override
   void dispose() {
-    _customVideoPlayerController.dispose();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
     setAllOrientations();
   }
@@ -31,40 +55,23 @@ class PlayerScreenState extends State<PlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Video Player'),
-      // ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width, // Set width to full device width
-        height: MediaQuery.of(context).size.height,
-        child: CustomVideoPlayer(customVideoPlayerController: _customVideoPlayerController), // Set height to full device height
+      body: Center(
+        child: _chewieController.videoPlayerController.value.isInitialized
+            ? Chewie(
+          controller: _chewieController,
+        )
+            : const CircularProgressIndicator(),
       ),
     );
   }
 
-  void playVideo(String url) {
-    // Implement video playback logic
-    File videoFile = File(url);
-    late VideoPlayerController videoPlayerController;
-    videoPlayerController = VideoPlayerController.file(videoFile)
-    //   _videoPlayerController = VideoPlayerController.asset(localPath)
-      ..initialize().then((value) {
-        // Play the video after initialization
-        videoPlayerController.play();
-        setState(() {});
-      });
-
-    _customVideoPlayerController =
-        CustomVideoPlayerController(context: context, videoPlayerController: videoPlayerController);
+  void setPlayerOrientation() async {
+    await SystemChrome.setEnabledSystemUIMode([] as SystemUiMode);
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   }
-}
 
-Future setPlayerOrientation() async{
-  await SystemChrome.setEnabledSystemUIMode([] as SystemUiMode);
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight]);
-}
-
-Future setAllOrientations() async{
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.values as SystemUiMode);
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.values as DeviceOrientation]);
+  void setAllOrientations() async {
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.values as SystemUiMode);
+    await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+  }
 }
