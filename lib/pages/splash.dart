@@ -28,7 +28,7 @@ class _SplashState extends State<Splash> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'VVPlayer',
+              'Virtual Video Player Application',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ],

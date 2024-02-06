@@ -16,7 +16,7 @@ class _TourScreenState extends State<TourScreen> {
 
   List<TourStep> tourSteps = [
     TourStep(
-      title: "Welcome to Video Player",
+      title: "Welcome to Virtual Video Player Application",
       description: "Discover the amazing features of our video player.",
       image: Icons.play_circle_filled,
     ),
