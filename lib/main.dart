@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vvplayer/pages/intro.dart';
 import 'package:vvplayer/pages/splash.dart';
+import 'package:vvplayer/pages/tour.dart';
 import 'package:vvplayer/pages/videolist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       home: AnimatedSplashScreen(
         duration: 3000,
         splash: const Splash(),
-        nextScreen: isIntroShown ? const VideoPlayerScreen() : const Intro(),
+        nextScreen: isIntroShown ? const VideoPlayerScreen() : const TourScreen(),
         splashTransition: SplashTransition.scaleTransition,
         backgroundColor: Colors.blue,
       ),
