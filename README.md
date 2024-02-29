@@ -1,6 +1,6 @@
 # vvplayer
 
-A new Flutter project.
+A Video Player in Flutter.
 
 ## Getting Started
 
@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# Setup & Run Project
+
+1 - Run the following command to fetch and install the dependencies:
+flutter pub get
+
+2 - Run the following command to run the project:
+flutter run --debug
