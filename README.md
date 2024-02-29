@@ -18,7 +18,9 @@ samples, guidance on mobile development, and a full API reference.
 # Setup & Run Project
 
 1 - Run the following command to fetch and install the dependencies:
+
 flutter pub get
 
 2 - Run the following command to run the project:
+
 flutter run --debug
