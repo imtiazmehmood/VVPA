@@ -145,6 +145,7 @@ class TourStepWidget extends StatelessWidget {
           Icon(tourStep.image, size: 120.0, color: Colors.blue),
           const SizedBox(height: 16.0),
           Text(
+            textAlign: TextAlign.center,
             tourStep.title,
             style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
           ),

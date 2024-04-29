@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 class Splash extends StatefulWidget {
   const Splash({super.key});
 
@@ -8,11 +9,11 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   navigateToHome();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    Permission.storage.request();
+  }
 
   @override
   Widget build(BuildContext context) {
