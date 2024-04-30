@@ -37,15 +37,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Future<void> fetchVideos() async {
     List<Directory> directories = await FileManager.getStorageList();
     List<Map<String, dynamic>> allVideos = [];
-    List<Map<String, dynamic>> allFirebaseVideos = [];
 
     for (Directory directory in directories) {
       List<FileSystemEntity> entities = directory.listSync(recursive: true);
 
-      // Filter entities to only include directories
       List<Directory> subDirectories = entities.whereType<Directory>().toList();
 
-      // Check if any subdirectory contains video files
       for (Directory subDir in subDirectories) {
         List<FileSystemEntity> files = subDir.listSync();
         List<File> videos = _getVideoFiles(files);
@@ -204,8 +201,8 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 ),
               ),
               ListView.builder(
-                shrinkWrap: true, // Ensure the ListView only occupies the space it needs
-                physics: const NeverScrollableScrollPhysics(), // Disable scrolling of inner ListView
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: folderVideos.length,
                 itemBuilder: (context, videoIndex) {
                   File videoFile = folderVideos[videoIndex];
@@ -235,6 +232,12 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> {
     String videoPath = videoFile.path;
     File thumbnail = await VideoCompress.getFileThumbnail(videoPath);
     String videoDisplayName = videoPath.split('/').last;
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("videos")
+        .where('path', isEqualTo: videoPath)
+        .get();
+
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -328,6 +331,13 @@ class VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     title: Text('Delete'),
                   ),
                 ),
+                // const PopupMenuItem<String>(
+                //   value: 'delete',
+                //   child: ListTile(
+                //     leading: Icon(Icons.favorite),
+                //     title: Text('Add to Favorite'),
+                //   ),
+                // ),
               ],
             ),
           ],

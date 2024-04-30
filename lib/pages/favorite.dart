@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vvplayer/pages/player.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -57,7 +56,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               final thumbnailPath = videoSnapshot['thumbnail'];
               final videoDisplayName = videoSnapshot['name'];
 
-              // Check if both path and isFavorite conditions are met
               if (videoPath != null && videoPath.isNotEmpty && videoSnapshot['isFavorite'] == true) {
                 // Check if the file exists in internal storage
                 File videoFile = File(videoPath);
@@ -66,7 +64,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 }
               }
 
-              // Return an empty container if conditions are not met
               return const SizedBox.shrink();
             },
           );
@@ -118,32 +115,32 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 ),
               ),
               // Add favorite icon here
-              IconButton(
-                icon: const Icon(Icons.favorite),
-                onPressed: () async {
-                  QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-                      .collection("videos")
-                      .where('path', isEqualTo: videoPath)
-                      .get();
-
-                  if (querySnapshot.docs.length == 1) {
-                    // Get the document ID
-                    String docId = querySnapshot.docs[0].id;
-
-                    // Update the document with the found docId
-                    await FirebaseFirestore.instance.collection("videos").doc(docId).update({
-                      'isFavorite': false, // Update the isFavorite field
-                    });
-                  } else {
-                    if (kDebugMode) {
-                      print('Document not found for path: $videoPath');
-                    }
-                  }
-
-                  // Refresh the screen by rebuilding the widget
-                  setState(() {});
-                },
-              ),
+              // IconButton(
+              //   icon: const Icon(Icons.favorite),
+              //   onPressed: () async {
+              //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+              //         .collection("videos")
+              //         .where('path', isEqualTo: videoPath)
+              //         .get();
+              //
+              //     if (querySnapshot.docs.length == 1) {
+              //       // Get the document ID
+              //       String docId = querySnapshot.docs[0].id;
+              //
+              //       // Update the document with the found docId
+              //       await FirebaseFirestore.instance.collection("videos").doc(docId).update({
+              //         'isFavorite': false, // Update the isFavorite field
+              //       });
+              //     } else {
+              //       if (kDebugMode) {
+              //         print('Document not found for path: $videoPath');
+              //       }
+              //     }
+              //
+              //     // Refresh the screen by rebuilding the widget
+              //     setState(() {});
+              //   },
+              // ),
             ],
           ),
         ),
