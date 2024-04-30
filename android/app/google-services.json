@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "704383692867",
+    "project_id": "vvpa-4b7e8",
+    "storage_bucket": "vvpa-4b7e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:704383692867:android:a9a5db944c0ac6e34624f6",
+        "android_client_info": {
+          "package_name": "com.example.vvplayer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCicgl1sJD_aBk1vtvKqM8Dr-YyNcJWKH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
